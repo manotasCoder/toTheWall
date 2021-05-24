@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
 const port = 5080;
-let bootstrap = __dirname + '/assets/';
-console.log(bootstrap);
+const hbs = require('hbs');
+
+const path = require('path');
+const hbsPath = path.resolve(__dirname, '../views/partials');
+
+app.set('view engine', 'hbs');
+hbs.registerPartials(hbsPath);
 
 // public para todos
 app.use( express.static('public'));
@@ -11,12 +16,16 @@ app.use( express.static('public'));
 //app.use("/assets/css", express.static(bootstrap));
 //app.use("/assets/css", express.static(path.join(__dirname, ".js")));
 
-app.get('/', (req, res) => {
-  res.send('Welcome Doc');
-})
+// app.get('*', (req, res) =>{
+//   res.sendFile(__dirname + '/public/404.html');
+// });
+
+app.get('/', (req,res) => {
+  res.render('home');
+});
 
 app.get('*', (req, res) =>{
-  res.send('404 | Page not found');
+  res.sendFile(__dirname + '/public/404.html');
 });
 
 app.listen(port, () =>{
