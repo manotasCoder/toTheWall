@@ -24,6 +24,18 @@ app.get('/', (req,res) => {
   res.render('home');
 });
 
+app.get('/favorites', (req,res) => {
+  res.render('favorites');
+});
+
+app.get('/signIn', (req,res) => {
+  res.render('signIn');
+});
+
+app.get('/signUp', (req,res) => {
+  res.render('signUp');
+});
+
 app.get('*', (req, res) =>{
   res.render('404');
 });
