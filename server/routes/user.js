@@ -34,7 +34,7 @@ app.post('/user', function (req, res) {
 });
 
 //login
-app.post( '/SignIn', function (req, res) {
+app.post( '/signIn', function (req, res) {
 
   let body = req.body;
 
@@ -66,6 +66,7 @@ app.post( '/SignIn', function (req, res) {
       
       }
 
+      //TODO: sessiones y redireccion
       res.redirect('/');
 
     }
