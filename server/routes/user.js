@@ -7,7 +7,6 @@ const _ = require('underscore');
 const User = require('../model/user');
 
 const app = express();
-var session = require('express-session')
 
    //creating new users
 app.post('/user', function (req, res) {

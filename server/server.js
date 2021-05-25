@@ -3,7 +3,8 @@ const express = require('express');
 const app = express();
 const hbs = require('hbs');
 const path = require('path');
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+var session = require('express-session');
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
