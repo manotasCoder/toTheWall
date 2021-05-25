@@ -1,24 +1,37 @@
+require('./env');
 const express = require('express');
 const app = express();
-const port = 5080;
 const hbs = require('hbs');
-
 const path = require('path');
+const bodyParser = require('body-parser')
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
+
+const { dbConnection } = require('./database/config');
+
+
+dbConnection().then( ()=>{
+  console.log('dbOnline');
+}).catch( () =>{
+  console.log("Database not connecting, check the admin of the APP");
+});
+
 const hbsPath = path.resolve(__dirname, '../views/partials');
 
 app.set('view engine', 'hbs');
 hbs.registerPartials(hbsPath);
 
-// public para todos
+// public for everybody
 app.use( express.static('public'));
 
+//routes
+app.use(require('./routes/index'));
 
-//app.use("/assets/css", express.static(bootstrap));
-//app.use("/assets/css", express.static(path.join(__dirname, ".js")));
-
-// app.get('*', (req, res) =>{
-//   res.sendFile(__dirname + '/public/404.html');
-// });
+// provisional routes
 
 app.get('/', (req,res) => {
   res.render('home');
@@ -40,6 +53,6 @@ app.get('*', (req, res) =>{
   res.render('404');
 });
 
-app.listen(port, () =>{
-    console.log('listening on '+ port +' port');
+app.listen(process.env.PORT, () =>{
+    console.log('listening on '+ process.env.PORT +' port');
 });
