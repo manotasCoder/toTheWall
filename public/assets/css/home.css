@@ -1,0 +1,17 @@
+#plus{
+    background-image: url(../img/plus.png);
+    background-size: contain;
+    padding: 2%;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 90%;
+    left: 49%;
+    z-index: +1;
+}
+#notBothering {
+
+    background: transparent;
+    border: none !important;
+    font-size:0;
+}
+

@@ -12,7 +12,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="h1 text-white mt-5">
-                Be ready to break The Wall!
+                To The Wall!
             </div>
         </div>
     </div>
@@ -20,18 +20,20 @@
     <div class="container mt-3">
         <div class="row mt-5 justify-content-center  border border-primary">
             
-            <form class="col-12" action="/signIn" method="post">
+            <form class="col-12" action="/note" method="post">
 
                 <div class="h4 text-white p-3 mt-1 col-12 form-group">
-                    <label class="col-12" for="uNick">Nick</label>
-                    <input class="col-12 form-control" name="uNick" alt="nick"  type="text" />
+                    <label class="col-12" for="uTitle">Title</label>
+                    <input class="col-12 form-control" name="uTitle" alt="title"  type="text" />
                 </div>
 
                 <div class="h4 text-white p-3 mt-1 col-12 form-group">
-                    <label class="col-12" for="uPass">Password</label>
-                    <input class="col-12 form-control" name="uPass" alt="pass"  type="password" />
+                    <label class="col-12" for="uContent">Content</label>
+                    <textarea class="col-12 form-control" name="uContent" alt="content" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary pb-1 mb-3 offset-10">Go for it!</button>
+                <button type="submit" class="btn btn-primary pb-1 mb-3 offset-10">To The Wall!</button>
+
+                <input type="hidden" name="id" value="{{id}}">
             </form>
 
         </div>

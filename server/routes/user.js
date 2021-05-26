@@ -9,8 +9,13 @@ const User = require('../model/user');
 const app = express();
 
    //creating new users
-app.post('/user', function (req, res) {
+
+app.get('/signUp', (req,res) => {
+    res.render('signUp');
+});
   
+
+app.post('/user', function (req, res) {
       let body = req.body;
 
       let user = new User({
@@ -34,8 +39,14 @@ app.post('/user', function (req, res) {
 });
 
 //login
+
+app.get('/signIn', (req,res) => {
+  res.render('signIn');
+});
+
 app.post( '/signIn', function (req, res) {
 
+  var ssn = req.session;
   let body = req.body;
 
   User.findOne( {nick: body.uNick}, (err, user) => {
@@ -56,7 +67,7 @@ app.post( '/signIn', function (req, res) {
         });
       }
 
-      if ( !bcrypt.compareSync( body.uPassword, user.password ) ) {
+      if ( !bcrypt.compareSync( body.uPass, user.password ) ) {
         return res.status(400).json({
             ok: false,
             err: {
@@ -66,7 +77,7 @@ app.post( '/signIn', function (req, res) {
       
       }
 
-      //TODO: sessiones y redireccion
+      ssn.user = user;
       res.redirect('/');
 
     }
@@ -78,7 +89,16 @@ app.post( '/signIn', function (req, res) {
 
 
 //logout
-app.post( '/signOut', function (req, res) {
+app.get( '/signOut', function (req, res) {
+  if (req.session.user!='undefined') {
+    req.session.destroy( (err) =>{
+      if (err) {
+        console.log(err);
+      }
+    } )
+  }
+  
+  res.redirect('/');
 
 });
 
