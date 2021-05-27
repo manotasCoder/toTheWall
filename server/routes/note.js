@@ -47,26 +47,35 @@ app.post('/note', function (req, res) {
 // list all notes
 
 app.get('/allNotes', (req, res) =>{
-  let data=new Array();
-  Note.find({})
-  .exec((err, notes) =>{
-    if (err) {
-      console.log(err);
-    } else {
-      for (const note of notes) {
-        placeUsers(note).then( nick =>
-          data.push({
+
+    let replacement=new Array();
+    Note.find({})
+    .exec( async (err, notes) =>{
+      if (err) {
+        console.log(err);
+      } else {
+        let nick;
+        for (const note of notes) {
+          
+          await placeUsers(note.author)
+          .then(name=>{
+          nick = name;  
+          }).catch( (err) =>{
+          console.log('falló estrepitosamente');  
+          });
+          
+          replacement.push({
             title: note.title,
             author: nick,
             content: note.content
-          })
-        );
+          });
+
+        }
+
+        res.send(replacement);
       }
-      console.log(data);
-      // console.log(data);
-      // res.send(data);
-    }
-  });
+    });
+  
 });
 
 //load favourites
