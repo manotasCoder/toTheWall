@@ -4,6 +4,8 @@ const _ = require('underscore');
 
 const Note = require('../model/note');
 
+const {placeUsers} = require('../helper/organiser');
+
 const app = express();
 
 //create note
@@ -40,6 +42,31 @@ app.post('/note', function (req, res) {
       }
     })    
 
+});
+
+// list all notes
+
+app.get('/allNotes', (req, res) =>{
+  let data=new Array();
+  Note.find({})
+  .exec((err, notes) =>{
+    if (err) {
+      console.log(err);
+    } else {
+      for (const note of notes) {
+        placeUsers(note).then( nick =>
+          data.push({
+            title: note.title,
+            author: nick,
+            content: note.content
+          })
+        );
+      }
+      console.log(data);
+      // console.log(data);
+      // res.send(data);
+    }
+  });
 });
 
 //load favourites

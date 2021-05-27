@@ -86,8 +86,6 @@ app.post( '/signIn', function (req, res) {
 
 });
 
-
-
 //logout
 app.get( '/signOut', function (req, res) {
   if (req.session.user!='undefined') {
@@ -102,5 +100,4 @@ app.get( '/signOut', function (req, res) {
 
 });
 
-
-    module.exports=app;
+module.exports=app;
