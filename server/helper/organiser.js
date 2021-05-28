@@ -1,17 +1,5 @@
 const User = require('../model/user');
 
-// find users for notes
-
-// let placeUsers = async (note) => {
-//      User.findOne({_id: note.author})
-//       .exec((err, user) =>{
-//         if (err) {
-//           console.log(err);
-//         } else {
-//             return user.nick;
-//         }
-//       }); 
-// }
 
 let placeUsers = (id) => {
 
@@ -26,83 +14,50 @@ let placeUsers = (id) => {
 
 }
 
-// let getNick = ( note ) =>{
+let addFavUser = (idUser, idNote) =>{
+  const addFav = new Promise( async resolve =>{
+    let favList = new Array();
+    //check if the note is already inside the array
+    await getFavs(idUser)
+    .then(userDb =>{
+      favList = userDb.favs;
+    })
+    .catch( (err) =>{
+      console.log('failure in the system');  
+    });
 
-//   const promesa = new Promise( (resolve, reject) =>{
+    if ( !favList.find(element => element === idNote) ) {
+      User.findByIdAndUpdate( idUser, {$push: { favs: idNote }},
+        (err, user) =>{
+          if (err) {
+            console.log(err);
+          } else {
+            resolve(user);
+          }
+      }) 
+    }
 
-//     // find
-//     let nick = false;
-//     User.findOne({_id: note.author})
-//     .exec((err, user) =>{
-//       nick=user.nick;
-//     });
+  });
 
-//     console.log(nick);
+  return addFav;
 
-//     if (nick) {
-//       console.log(nick);
-//       resolve( nick );
-//     }
-//     else {
-//       reject('Anonymous');
-//     }
+}
 
-//   });
+let getFavs = (id) => {
 
-//   return promesa;
+  const getFavs = new Promise(resolve =>{
+    User.findOne({_id: id})
+    .exec((err, user) =>{
+      resolve(user);
+    });
+  });
+  
+  return getFavs;
 
-// }
+}
 
-// for (const note of notes) {
-//   placeUsers(note).then( nick =>
-//     data.push({
-//       title: note.title,
-//       author: nick,
-//       content: note.content
-//     })
-//   );
-// }
-// console.log(data);
-
-
-
-// To do Promise and call it through async await
-
-// let placeUsers = (notes) => {
-
-//     const promesa = new Promise( (resolve, reject ) =>{
-
-//     let replacement = new Array();
-//     let clone;
-//     // for (const note of notes) {
-        
-//       User.findOne({_id: note.author})
-//       .exec((err, user) =>{
-//         if (err) {
-//           console.log(err);
-//         } else {
-//             clone={
-//                 title: note.title,
-//                 author: user.nick,
-//                 content: note.content
-//             }
-//             replacement.push(clone);
-//           console.log(replacement);
-//         }
-//       }); 
-
-//         if (user) {
-//             resolve( empleado )
-            
-//         } else {
-//             reject('anonymous');
-//         }
-
-
-//     });
-
-// }
 
 module.exports={
-    placeUsers
+    placeUsers,
+    addFavUser
 }

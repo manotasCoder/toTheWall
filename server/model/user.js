@@ -14,8 +14,9 @@ const UserSchema = Schema({
         type: String,
         required: [true, 'password is mandatory']
     },
-    img:{
-        type: String
+    favs:{
+        type : Array , 
+        "default" : []
     }
 });
 

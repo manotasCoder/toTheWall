@@ -41,7 +41,14 @@ app.post('/user', function (req, res) {
 //login
 
 app.get('/signIn', (req,res) => {
-  res.render('signIn');
+
+  var ssn = req.session;
+  if (ssn.user) {
+    res.redirect('/');
+  } else {
+    res.render('signIn');
+  }
+
 });
 
 app.post( '/signIn', function (req, res) {
@@ -88,7 +95,7 @@ app.post( '/signIn', function (req, res) {
 
 //logout
 app.get( '/signOut', function (req, res) {
-  if (req.session.user!='undefined') {
+  if (req.session.user) {
     req.session.destroy( (err) =>{
       if (err) {
         console.log(err);

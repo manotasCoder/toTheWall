@@ -8,10 +8,18 @@
     left: 49%;
     z-index: +1;
 }
+@media screen and (max-width: 600px) {
+    #plus{
+        padding:5%;
+    }
+}
 #notBothering {
 
     background: transparent;
     border: none !important;
     font-size:0;
 }
+/* .bt{
+    border-bottom: 1px solid lightgray;
+} */
 
