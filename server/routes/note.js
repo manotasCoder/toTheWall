@@ -109,10 +109,9 @@ app.get('/favorites', (req, res) =>{
 
   let ssn = req.session;
   if (ssn.user) {
+
   let noteIds = ssn.user.favs;
-    console.log(noteIds.length);
     if ( noteIds.length == 0 ) {
-      console.log('aqui');
       res.send({
         id: 'none',
         title: 'You have no favs so far',
@@ -163,6 +162,7 @@ app.post('/addFav', async (req,res) => {
     await addFavUser(userId, fav)
     .then(user => {
       req.session.user = user; 
+      req.session.save();
     })
     .catch( (err) =>{
       console.log('failure in the system');  
